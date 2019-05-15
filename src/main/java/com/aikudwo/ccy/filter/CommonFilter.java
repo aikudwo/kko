@@ -31,7 +31,7 @@ import java.io.IOException;
  */
 @WebFilter(urlPatterns = {"/test/*"}, filterName = "CommonFilter",
         initParams = {
-                @WebInitParam(name = "whiteListString", value = "0:0:0:0:0:0:0:1|127.0.0.01|172.17.0.1"),
+                @WebInitParam(name = "whiteListString", value = "0:0:0:0:0:0:0:1|127.0.0.1|172.17.0.1"),
         })
 @Order(value = 1)
 public class CommonFilter implements Filter {

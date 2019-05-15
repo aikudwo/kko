@@ -1,8 +1,11 @@
-package com.aikudwo.ccy.Controller;
+package com.aikudwo.ccy.controller;
 
+
+import com.aikudwo.ccy.customize.configuration.CacheConfig;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cache.annotation.Cacheable;
 
 /**
  * @author wls
@@ -13,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestFilterController {
 
+    @Cacheable(value = CacheConfig.CacheNames.CACHE_TEST_CACHE_NAME)
     @PostMapping("testFilter")
-    public void TestFilter1(){
+    public String TestFilter1(){
         System.out.println("666666666666");
+        String s = "66666666666666";
+        return s;
     }
 }

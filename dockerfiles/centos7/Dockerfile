@@ -5,4 +5,4 @@ RUN yum update -y
 RUN yum install -y java-1.8.0-openjdk
 ADD dingtalk-gateway.jar /
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/dingtalk-gateway.jar"]
+ENTRYPOINT ["java","-jar","/ccy-gateway.jar"]
