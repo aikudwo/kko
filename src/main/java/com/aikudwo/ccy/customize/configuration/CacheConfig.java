@@ -35,11 +35,13 @@ public class CacheConfig extends CachingConfigurerSupport {
 
     public static class CacheNames {
         public static final String CACHE_TEST_CACHE_NAME = "cacheTest";
+        public static final String ACCESS_TOKEN_CACHE_NAME = "accessToken";
 
     }
 
     public enum TTLSecond {
-        CACHE_TEST(CacheNames.CACHE_TEST_CACHE_NAME, 3600L);
+        CACHE_TEST(CacheNames.CACHE_TEST_CACHE_NAME, 3600L),
+        ACCESS_TOKEN(CacheNames.ACCESS_TOKEN_CACHE_NAME,3600L) ;
         private String cacheName;
         private Long ttl;
         private Long refreshTime;

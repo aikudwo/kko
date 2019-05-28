@@ -1,0 +1,58 @@
+#image: java:openjdk-8-jdk
+
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments. Using a fresh
+# runtime for each build is more reliable since the runtime is completely
+# isolated from any previous builds.
+
+stages:
+  - build
+  - stop
+  - run
+
+
+before_script:
+  - JAVA_HOME=/usr/lib/jvm/java
+  - CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+  - GRADLE_HOME=/opt/gradle/gradle-4.6
+  - PATH=$PATH:$HOME/.local/bin:$HOME/bin:$GRADLE_HOME/bin
+  - TOMCAT_HOME=/lxserver/service/dingding_service/tomcat/dingding_tomcat_7082
+  - export TOMCAT_HOME
+  - export JAVA_HOME
+  - export GRADLE_HOME
+  - export CLASSPATH
+  - export PATH
+
+build:
+    stage: build
+    only:
+      - master
+    tags:
+      - test
+    script:
+      - tags=test
+      - script/build.sh -t ${tags}
+      - script/release.sh -t ${tags} -w build/libs/DingtalkTopMiddleware-1.0.0.war
+
+
+stop:
+    stage: stop
+    cache:
+        untracked: false
+    only:
+      - master
+    tags:
+      - test
+    script:
+      - $TOMCAT_HOME/bin/shutdown.sh
+
+run:
+    stage: run
+    cache:
+        untracked: false
+    only:
+      - master
+    tags:
+      - test
+    script:
+      - $TOMCAT_HOME/bin/startup.sh

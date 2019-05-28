@@ -1,0 +1,49 @@
+stages:
+  - docker_build
+  - docker_stop
+  - docker_start
+
+
+
+before_script:
+  - JAVA_HOME=/usr/lib/jvm/java
+  - CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+  - GRADLE_HOME=/opt/gradle/gradle-4.6
+  - PATH=$PATH:$HOME/.local/bin:$HOME/bin:$GRADLE_HOME/bin
+  - export JAVA_HOME
+  - export GRADLE_HOME
+  - export CLASSPATH
+  - export PATH
+
+docker_build:
+    stage: docker_build
+    only:
+      - master
+    tags:
+      - test
+    script:
+      - tags=test
+      - gradle bootJar -Dprofile=${tags}
+      - mv build/libs/DingtalkTopMiddleware-1.0.0.jar dockerfiles/centos7/dingtalk-gateway.jar
+      - cd dockerfiles/centos7
+      - docker build -t dingtalk-gateway .
+
+docker_stop:
+    stage: docker_stop
+    only:
+      - master
+    tags:
+      - test
+    script:
+      - docker stop dingtalk-gateway
+      - docker rename dingtalk-gateway dingtalk-gateway_bk_$(date +%G%m%d%H%M%S)
+
+docker_start:
+    stage: docker_start
+    only:
+      - master
+    tags:
+      - test
+    script:
+      - docker run -v /etc/timezone:/etc/timezone -v /etc/localtime:/etc/localtime -d -p 7082:8080 --name dingtalk-gateway dingtalk-gateway
+    when: always

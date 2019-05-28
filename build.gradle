@@ -1,5 +1,8 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
+setGroup "aikudwo"
+setVersion '1.0.0'
+
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: SpringBootPlugin
@@ -25,6 +28,10 @@ buildscript {
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 	options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+bootJar  {
+	mainClassName = 'com.aikudwo.ccy.CcyApplication'
 }
 
 repositories {
@@ -53,7 +60,7 @@ dependencies {
 }
 
 
-def env = System.getProperty("profile") ?: "dev"
+def env = System.getProperty("profile") ?: "test"
 
 sourceSets {
 	main {
