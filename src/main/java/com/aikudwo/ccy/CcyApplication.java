@@ -1,11 +1,13 @@
 package com.aikudwo.ccy;
 
+import com.aikudwo.ccy.ioc.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -40,7 +42,10 @@ public class CcyApplication extends SpringBootServletInitializer implements Comm
 		if(b.equals(a)){
 			System.out.println("88888888888888888888");
 		}
-		SpringApplication.run(CcyApplication.class, args);
+		ApplicationContext axt = SpringApplication.run(CcyApplication.class, args);
+		Person bean = axt.getBean(Person.class);
+		System.out.println(bean.getName() +"----是 ----" + bean.getId());
+		bean.call();
 	}
 
 	@Override
