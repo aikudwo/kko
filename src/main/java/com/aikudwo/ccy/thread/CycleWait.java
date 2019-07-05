@@ -32,4 +32,6 @@ public class CycleWait implements Runnable{
 
         System.out.println(aaa.value);
     }
+
+
 }

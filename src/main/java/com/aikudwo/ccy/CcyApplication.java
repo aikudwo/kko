@@ -15,6 +15,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PostConstruct;
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
 import java.util.TimeZone;
 
 @EnableRetry
@@ -34,6 +36,9 @@ public class CcyApplication extends SpringBootServletInitializer implements Comm
 	}
 
 	public static void main(String[] args) {
+		String aaa = new String("aaa");
+		ReferenceQueue<String> queue = new ReferenceQueue<>();
+		PhantomReference<String> sprf = new PhantomReference<>(aaa, queue);
 		int a = 6;
 		Integer b = 6;
 		if(a==b){
@@ -50,5 +55,6 @@ public class CcyApplication extends SpringBootServletInitializer implements Comm
 
 	@Override
 	public void run(String... args) throws Exception{
+
 	}
 }

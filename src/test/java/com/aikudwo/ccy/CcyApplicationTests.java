@@ -11,6 +11,8 @@ public class CcyApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		//new DemoPublisher().publish("你好");
+		System.out.println("6666666666");
 	}
 
 }
